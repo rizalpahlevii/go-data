@@ -14,7 +14,9 @@ func RunSeeders() {
 	//sellersSeeder()
 	//productsSeeder()
 	//ordersSeeder()
-	orderItemsSeeder()
+	//orderItemsSeeder()
+	//orderPaymentsSeeder()
+	orderReviewsSeeder()
 	//fmt.Println("Seeders finished. time elapsed: " + time.Since(start).String())
 
 }

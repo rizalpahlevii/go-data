@@ -18,7 +18,7 @@ func orderPaymentUp() {
 	defer db.Close()
 
 	ctx := context.Background()
-	query := "CREATE TABLE order_payment (order_id varchar(50), payment_sequential int, payment_type varchar(255), payment_installments int, payment_value float);"
+	query := "CREATE TABLE order_payment (order_id varchar(50), payment_sequential int, payment_type varchar(50), payment_installments int, payment_value float);"
 	_, err := db.ExecContext(ctx, query)
 	if err != nil {
 		panic(err)

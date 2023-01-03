@@ -31,7 +31,7 @@ func orderReviewUp() {
 	ctx := context.Background()
 
 	// Create table order_review
-	script := "CREATE TABLE order_review (review_id VARCHAR(255), order_id VARCHAR(255), review_score INT, review_comment_title VARCHAR(255) NULL, review_comment_message VARCHAR(255) NULL, review_creation_date DATETIME, review_answer_timestamp TIMESTAMP)"
+	script := "CREATE TABLE order_review (review_id VARCHAR(50), order_id VARCHAR(50), review_score INT, review_comment_title VARCHAR(255) NULL, review_comment_message VARCHAR(255) NULL, review_creation_date DATETIME, review_answer_timestamp TIMESTAMP)"
 	_, err := db.ExecContext(ctx, script)
 	if err != nil {
 		panic(err)
