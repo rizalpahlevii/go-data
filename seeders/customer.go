@@ -9,12 +9,11 @@ import (
 	"time"
 )
 
-func geolocationsSeeder() {
-	fmt.Println("Importing geolocations...")
+func customersSeeder() {
+	fmt.Println("Importing customers...")
 	start := time.Now()
 
-	// open the file
-	csvFile, err := os.Open("datasets/olist_geolocation_dataset.csv")
+	csvFile, err := os.Open("datasets/olist_customers_dataset.csv")
 	if err != nil {
 		panic(err)
 	}
@@ -37,23 +36,21 @@ func geolocationsSeeder() {
 
 	// start the insert in a separate goroutine
 	go func() {
-
-		// Begin a transaction
 		tx, err := db.Begin()
 		if err != nil {
 			panic(err)
 		}
 
-		// prepare the insert statement
-		stmt, err := tx.Prepare("INSERT INTO geolocation ( geolocation_zip_code_prefix, geolocation_lat, geolocation_lng, geolocation_city, geolocation_state) VALUES (?, ?, ?, ?, ?)")
+		stmt, err := tx.Prepare("INSERT INTO customer ( customer_id, customer_unique_id, customer_zip_code_prefix, customer_city, customer_state) VALUES (?, ?, ?, ?, ?)")
 		if err != nil {
 			panic(err)
 		}
 		defer stmt.Close()
 
 		// iterate over the records start from 1 to skip the header
+
 		for i := 1; i < len(records); i++ {
-			//	geolocation_zip_code_prefix","geolocation_lat","geolocation_lng","geolocation_city","geolocation_state"
+			//	"customer_id","customer_unique_id","customer_zip_code_prefix","customer_city","customer_state"
 			record := records[i]
 
 			_, err = stmt.ExecContext(ctx, record[0], record[1], record[2], record[3], record[4])
@@ -62,15 +59,14 @@ func geolocationsSeeder() {
 			}
 		}
 
-		if err := tx.Commit(); err != nil {
+		if err = tx.Commit(); err != nil {
 			panic(err)
 		}
-
 		done <- true
 	}()
 
 	// wait for the insert to complete
 	<-done
+	fmt.Printf("Imported %d records in %s", len(records)-1, time.Since(start))
 
-	fmt.Printf("Imported %d records of customer in %s", len(records)-1, time.Since(start))
 }

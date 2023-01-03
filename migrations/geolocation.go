@@ -34,7 +34,7 @@ func geolocationUp() {
 	ctx := context.Background()
 
 	// Create table
-	script := "CREATE TABLE geolocation (geolocation_zip_code_prefix VARCHAR(255), geolocation_lat VARCHAR(255), geolocation_lng VARCHAR(255), geolocation_city VARCHAR(255), geolocation_state VARCHAR(255))"
+	script := "CREATE TABLE geolocation (geolocation_zip_code_prefix VARCHAR(50), geolocation_lat VARCHAR(50), geolocation_lng VARCHAR(50) NULL, geolocation_city VARCHAR(50) NULL, geolocation_state VARCHAR(50) NULL)"
 	_, err := db.ExecContext(ctx, script)
 	if err != nil {
 		panic(err)

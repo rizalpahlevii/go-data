@@ -1,4 +1,5 @@
 package seeders
 
-func importOrderItem() {
+func orderItemsSeeder() {
+
 }
