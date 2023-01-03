@@ -1,9 +1,12 @@
 package main
 
-import "main/seeders"
+import (
+	"main/migrations"
+	"main/seeders"
+)
 
 func main() {
-	//migrations.RunMigrations()
+	migrations.RunMigrations()
 	seeders.RunSeeders()
 
 }

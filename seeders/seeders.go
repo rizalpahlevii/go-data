@@ -13,8 +13,8 @@ func RunSeeders() {
 	//customersSeeder()
 	//sellersSeeder()
 	//productsSeeder()
-	ordersSeeder()
-
+	//ordersSeeder()
+	orderItemsSeeder()
 	//fmt.Println("Seeders finished. time elapsed: " + time.Since(start).String())
 
 }

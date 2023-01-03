@@ -37,9 +37,9 @@ func orderItemUp() {
 		order_item_id varchar(50) NOT NULL,
 		product_id varchar(50) NOT NULL,
 		seller_id varchar(50) NOT NULL,
-		shipping_limit_date varchar(50) NOT NULL,
-		price varchar(50) NOT NULL,
-		freight_value varchar(50) NOT NULL)`
+		shipping_limit_date TIMESTAMP NOT NULL,
+		price FLOAT NOT NULL,
+		freight_value FLOAT NOT NULL)`
 
 	_, err := db.ExecContext(ctx, createQuery)
 	if err != nil {

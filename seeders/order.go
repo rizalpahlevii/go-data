@@ -96,12 +96,16 @@ func ordersSeeder() {
 				panic(err)
 			}
 		}
-		tx.Commit()
+
+		if err := tx.Commit(); err != nil {
+			panic(err)
+		}
+
 		done <- true
 	}()
 
 	<-done
 
-	fmt.Printf("Imported %d records of customer in %s", len(records)-1, time.Since(start))
+	fmt.Printf("Imported %d records of order in %s", len(records)-1, time.Since(start))
 
 }
