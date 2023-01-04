@@ -1,8 +1,8 @@
-package main
+package queries
 
 import (
 	"fmt"
-	"main/configurations"
+	"main/database"
 )
 
 //
@@ -188,21 +188,62 @@ import (
 ///*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 ///*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
-func getRevenues() {
-	locationTable := configurations.Configuration().CustomerTableName
-	geolocationTable := configurations.Configuration().GeolocationTableName
-	orderTable := configurations.Configuration().OrderTableName
-	orderItemTable := configurations.Configuration().OrderItemTableName
-	productTable := configurations.Configuration().ProductTableName
-	translationTable := configurations.Configuration().TranslationTableName
-	orderPaymentTable := configurations.Configuration().OrderPaymentTableName
-	orderReviewTable := configurations.Configuration().OrderReviewTableName
-	sellerTable := configurations.Configuration().SellerTableName
-	customerTable := configurations.Configuration().CustomerTableName
+func GetRevenues() {
+	//Displays the revenue (profit) earned every day based on sales every day by looking at the price paid base on the table above
+	db := database.GetConnection()
+	defer db.Close()
 
-	//db := database.GetConnection()
-	//defer db.Close()
-	fmt.Println("TestGetRevenues")
-	fmt.Println(locationTable, geolocationTable, orderTable, orderItemTable, productTable, translationTable, orderPaymentTable, orderReviewTable, sellerTable, customerTable)
+	script := `SELECT DATE_FORMAT(order12692.order_purchase_timestamp, '%Y-%m-%d') AS date, SUM(order_item12692.price) AS revenue FROM order12692 INNER JOIN order_item12692 ON order12692.order_id = order_item12692.order_id GROUP BY date ORDER BY date ASC`
 
+	rows, err := db.Query(script)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for rows.Next() {
+		var orderPurchaseTimestamp string
+		var orderItemPrice float64
+		err = rows.Scan(&orderPurchaseTimestamp, &orderItemPrice)
+		if err != nil {
+			panic(err.Error())
+		}
+		fmt.Println(orderPurchaseTimestamp, orderItemPrice)
+	}
+}
+
+func Question2() {
+	db := database.GetConnection()
+	defer db.Close()
+
+	//Displays the volume of products transported from seller to customer (in kilograms),
+	//assuming the product is always physically stored at the seller's location
+
+	script := `SELECT s.seller_id, s.seller_zip_code_prefix, s.seller_city, s.seller_state,
+       p.product_id, p.product_category_name,
+       SUM(p.product_weight_g/1000) AS total_weight
+FROM product12692 p
+INNER JOIN order_item12692 oi ON p.product_id = oi.product_id 
+INNER JOIN seller12692 s ON oi.seller_id = s.seller_id
+GROUP BY s.seller_id, p.product_id
+ORDER BY total_weight ASC`
+
+	rows, err := db.Query(script)
+	if err != nil {
+		panic(err.Error())
+	}
+
+	for rows.Next() {
+		var sellerId string
+		var sellerZipCodePrefix string
+		var sellerCity string
+		var sellerState string
+		var productId string
+		var productCategoryName string
+		var totalWeight float64
+		err = rows.Scan(&sellerId, &sellerZipCodePrefix, &sellerCity, &sellerState, &productId, &productCategoryName, &totalWeight)
+		if err != nil {
+			panic(err.Error())
+		}
+		fmt.Println(sellerId, sellerZipCodePrefix, sellerCity, sellerState, productId, productCategoryName, totalWeight)
+	}
 }
