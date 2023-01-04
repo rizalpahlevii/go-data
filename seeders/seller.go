@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/csv"
 	"fmt"
+	"main/configurations"
 	"main/database"
 	"os"
 	"time"
@@ -43,7 +44,7 @@ func sellersSeeder() {
 		}
 
 		// prepare the insert statement
-		stmt, err := tx.Prepare("INSERT INTO seller ( seller_id, seller_zip_code_prefix, seller_city, seller_state) VALUES (?, ?, ?, ?)")
+		stmt, err := tx.Prepare("INSERT INTO " + configurations.Configuration().SellerTableName + " ( seller_id, seller_zip_code_prefix, seller_city, seller_state) VALUES (?, ?, ?, ?)")
 		if err != nil {
 			panic(err)
 		}

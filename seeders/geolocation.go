@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/csv"
 	"fmt"
+	"main/configurations"
 	"main/database"
 	"os"
 	"time"
@@ -45,7 +46,7 @@ func geolocationsSeeder() {
 		}
 
 		// prepare the insert statement
-		stmt, err := tx.Prepare("INSERT INTO geolocation ( geolocation_zip_code_prefix, geolocation_lat, geolocation_lng, geolocation_city, geolocation_state) VALUES (?, ?, ?, ?, ?)")
+		stmt, err := tx.Prepare("INSERT INTO " + configurations.Configuration().GeolocationTableName + " ( geolocation_zip_code_prefix, geolocation_lat, geolocation_lng, geolocation_city, geolocation_state) VALUES (?, ?, ?, ?, ?)")
 		if err != nil {
 			panic(err)
 		}

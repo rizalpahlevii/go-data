@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/csv"
 	"fmt"
+	"main/configurations"
 	"main/database"
 	"os"
 	"time"
@@ -41,7 +42,7 @@ func orderPaymentsSeeder() {
 			panic(err)
 		}
 
-		stmt, err := tx.Prepare("INSERT INTO order_payment ( order_id, payment_sequential, payment_type, payment_installments, payment_value) VALUES (?, ?, ?, ?, ?)")
+		stmt, err := tx.Prepare("INSERT INTO " + configurations.Configuration().OrderPaymentTableName + " ( order_id, payment_sequential, payment_type, payment_installments, payment_value) VALUES (?, ?, ?, ?, ?)")
 		if err != nil {
 			panic(err)
 		}

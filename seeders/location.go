@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/csv"
 	"fmt"
+	"main/configurations"
 	"main/database"
 	"os"
 	"time"
@@ -37,7 +38,7 @@ func locationsSeeder() {
 		record := records[i]
 
 		// insert into the database
-		query := "INSERT INTO location (state, state_code, city, zip_code_start, zip_code_end, state_lat, state_lng) VALUES (?, ?, ?, ?, ?, ?, ?)"
+		query := "INSERT INTO " + configurations.Configuration().LocationTableName + " (state, state_code, city, zip_code_start, zip_code_end, state_lat, state_lng) VALUES (?, ?, ?, ?, ?, ?, ?)"
 		_, err = db.ExecContext(ctx, query, record[0], record[1], record[2], record[3], record[4], record[5], record[6])
 		if err != nil {
 			panic(err)

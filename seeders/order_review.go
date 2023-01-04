@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/csv"
 	"fmt"
+	"main/configurations"
 	"main/database"
 	"os"
 	"time"
@@ -40,7 +41,7 @@ func orderReviewsSeeder() {
 			panic(err)
 		}
 
-		stmt, err := tx.Prepare("INSERT INTO order_review ( review_id,order_id, review_score, review_comment_title, review_comment_message, review_creation_date, review_answer_timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)")
+		stmt, err := tx.Prepare("INSERT INTO " + configurations.Configuration().OrderReviewTableName + " ( review_id,order_id, review_score, review_comment_title, review_comment_message, review_creation_date, review_answer_timestamp) VALUES (?, ?, ?, ?, ?, ?, ?)")
 		if err != nil {
 			panic(err)
 		}

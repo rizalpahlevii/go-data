@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/csv"
 	"fmt"
+	"main/configurations"
 	"main/database"
 	"os"
 	"time"
@@ -46,7 +47,7 @@ func translationSeeder() {
 		}
 
 		// prepare the insert statement
-		stmt, err := tx.Prepare("INSERT INTO translation ( product_category_name, product_category_name_english) VALUES (?, ?)")
+		stmt, err := tx.Prepare("INSERT INTO " + configurations.Configuration().TranslationTableName + " ( product_category_name, product_category_name_english) VALUES (?, ?)")
 		if err != nil {
 			panic(err)
 		}
