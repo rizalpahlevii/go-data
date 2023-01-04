@@ -3,6 +3,7 @@ package migrations
 import (
 	"context"
 	"fmt"
+	"main/configurations"
 	"main/database"
 )
 
@@ -17,7 +18,7 @@ func translationDown() {
 
 	ctx := context.Background()
 
-	script := `DROP TABLE IF EXISTS translation`
+	script := `DROP TABLE IF EXISTS ` + configurations.Configuration().TranslationTableName
 	_, err := db.ExecContext(ctx, script)
 	if err != nil {
 		panic(err)
@@ -32,7 +33,7 @@ func translationUp() {
 
 	ctx := context.Background()
 
-	script := `CREATE TABLE translation (
+	script := `CREATE TABLE ` + configurations.Configuration().TranslationTableName + ` (
 		product_category_name varchar(255) NOT NULL,
 		product_category_name_english varchar(255) NOT NULL
 		)`

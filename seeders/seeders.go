@@ -2,21 +2,24 @@ package seeders
 
 import (
 	"fmt"
+	"time"
 )
 
 func RunSeeders() {
 	fmt.Println("Running seeders...")
-	//start := time.Now()
-	//
-	//locationsSeeder()
-	//geolocationsSeeder()
-	//customersSeeder()
-	//sellersSeeder()
-	//productsSeeder()
-	//ordersSeeder()
-	//orderItemsSeeder()
-	//orderPaymentsSeeder()
+	start := time.Now()
+
+	locationsSeeder()
+	geolocationsSeeder()
+	customersSeeder()
+	sellersSeeder()
+	productsSeeder()
+	ordersSeeder()
+	orderItemsSeeder()
+	orderPaymentsSeeder()
 	orderReviewsSeeder()
-	//fmt.Println("Seeders finished. time elapsed: " + time.Since(start).String())
+	translationSeeder()
+
+	fmt.Println("Seeders finished. time elapsed: " + time.Since(start).String())
 
 }

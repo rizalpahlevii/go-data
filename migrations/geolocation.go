@@ -3,6 +3,7 @@ package migrations
 import (
 	"context"
 	"fmt"
+	"main/configurations"
 	"main/database"
 )
 
@@ -19,7 +20,7 @@ func geolocationDown() {
 	ctx := context.Background()
 
 	// Drop table
-	dropQuery := "DROP TABLE IF EXISTS geolocation"
+	dropQuery := "DROP TABLE IF EXISTS " + configurations.Configuration().GeolocationTableName
 	_, err := db.ExecContext(ctx, dropQuery)
 	if err != nil {
 		panic(err)
@@ -34,7 +35,7 @@ func geolocationUp() {
 	ctx := context.Background()
 
 	// Create table
-	script := "CREATE TABLE geolocation (geolocation_zip_code_prefix VARCHAR(50), geolocation_lat VARCHAR(50), geolocation_lng VARCHAR(50) NULL, geolocation_city VARCHAR(50) NULL, geolocation_state VARCHAR(50) NULL)"
+	script := "CREATE TABLE " + configurations.Configuration().GeolocationTableName + " (geolocation_zip_code_prefix VARCHAR(50), geolocation_lat VARCHAR(50), geolocation_lng VARCHAR(50) NULL, geolocation_city VARCHAR(50) NULL, geolocation_state VARCHAR(50) NULL)"
 	_, err := db.ExecContext(ctx, script)
 	if err != nil {
 		panic(err)

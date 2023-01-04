@@ -1,0 +1,12 @@
+{
+   "location_table_name" : "location12692",
+   "geolocation_table_name" : "geolocation12692",
+   "customer_table_name" : "customer12692",
+   "order_table_name" : "order12692",
+   "order_item_table_name" : "order_item12692",
+   "product_table_name" : "product12692",
+   "translation_table_name" : "translation12692",
+   "order_payment_table_name" : "order_payment12692",
+   "order_review_table_name" : "order_review12692",
+   "seller_table_name" : "seller12692"
+}

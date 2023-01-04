@@ -3,6 +3,7 @@ package migrations
 import (
 	"context"
 	"fmt"
+	"main/configurations"
 	"main/database"
 )
 
@@ -19,7 +20,7 @@ func customerDown() {
 
 	ctx := context.Background()
 
-	query := `DROP TABLE IF EXISTS customer`
+	query := `DROP TABLE IF EXISTS ` + configurations.Configuration().CustomerTableName
 	_, err := db.ExecContext(ctx, query)
 	if err != nil {
 		panic(err)
@@ -34,7 +35,7 @@ func customerUp() {
 
 	ctx := context.Background()
 
-	query := `CREATE TABLE customer (
+	query := `CREATE TABLE ` + configurations.Configuration().CustomerTableName + ` (
 		customer_id VARCHAR(255) NOT NULL,
 		customer_unique_id VARCHAR(255) NOT NULL,
 		customer_zip_code_prefix VARCHAR(255) NOT NULL,

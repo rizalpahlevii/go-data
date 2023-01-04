@@ -3,6 +3,7 @@ package migrations
 import (
 	"context"
 	"fmt"
+	"main/configurations"
 	"main/database"
 )
 
@@ -18,7 +19,7 @@ func orderItemDown() {
 
 	ctx := context.Background()
 
-	dropQuery := `DROP TABLE IF EXISTS order_items`
+	dropQuery := "DROP TABLE IF EXISTS " + configurations.Configuration().OrderItemTableName
 	_, err := db.ExecContext(ctx, dropQuery)
 	if err != nil {
 		panic(err)
@@ -32,7 +33,7 @@ func orderItemUp() {
 
 	ctx := context.Background()
 
-	createQuery := `CREATE TABLE order_items (
+	createQuery := `CREATE TABLE ` + configurations.Configuration().OrderItemTableName + ` (
 		order_id varchar(50) NOT NULL,
 		order_item_id varchar(50) NOT NULL,
 		product_id varchar(50) NOT NULL,

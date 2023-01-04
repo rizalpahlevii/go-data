@@ -3,6 +3,7 @@ package migrations
 import (
 	"context"
 	"fmt"
+	"main/configurations"
 	"main/database"
 )
 
@@ -16,7 +17,7 @@ func locationDown() {
 	defer db.Close()
 	ctx := context.Background()
 	// Drop table if exists
-	dropQuery := "DROP TABLE IF EXISTS location"
+	dropQuery := "DROP TABLE IF EXISTS " + configurations.Configuration().LocationTableName
 	_, err := db.ExecContext(ctx, dropQuery)
 	if err != nil {
 		panic(err)
@@ -32,7 +33,7 @@ func locationUp() {
 	ctx := context.Background()
 
 	// Create table location
-	script := "CREATE TABLE location (state VARCHAR(255), state_code VARCHAR(255), city VARCHAR(255), zip_code_start VARCHAR(255), zip_code_end VARCHAR(255), state_lat VARCHAR(255), state_lng VARCHAR(255))"
+	script := "CREATE TABLE " + configurations.Configuration().LocationTableName + " (state VARCHAR(255), state_code VARCHAR(255), city VARCHAR(255), zip_code_start VARCHAR(255), zip_code_end VARCHAR(255), state_lat VARCHAR(255), state_lng VARCHAR(255))"
 	_, err := db.ExecContext(ctx, script)
 	if err != nil {
 		panic(err)

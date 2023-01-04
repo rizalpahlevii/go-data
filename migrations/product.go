@@ -3,6 +3,7 @@ package migrations
 import (
 	"context"
 	"fmt"
+	"main/configurations"
 	"main/database"
 )
 
@@ -17,7 +18,7 @@ func productDown() {
 
 	ctx := context.Background()
 
-	script := "DROP TABLE IF EXISTS product"
+	script := "DROP TABLE IF EXISTS " + configurations.Configuration().ProductTableName
 	_, err := db.ExecContext(ctx, script)
 	if err != nil {
 		panic(err)
@@ -31,7 +32,7 @@ func productUp() {
 	defer db.Close()
 
 	ctx := context.Background()
-	script := "CREATE TABLE product (product_id varchar(255) NOT NULL, product_category_name varchar(255) NULL, product_name_length int NULL, product_description_length int NULL, product_photos_qty int NULL, product_weight_g int NULL, product_length_cm int NULL, product_height_cm int NULL, product_width_cm int NULL, PRIMARY KEY (product_id))"
+	script := "CREATE TABLE " + configurations.Configuration().ProductTableName + " (product_id varchar(255) NOT NULL, product_category_name varchar(255) NULL, product_name_length int NULL, product_description_length int NULL, product_photos_qty int NULL, product_weight_g int NULL, product_length_cm int NULL, product_height_cm int NULL, product_width_cm int NULL, PRIMARY KEY (product_id))"
 	_, err := db.ExecContext(ctx, script)
 	if err != nil {
 		panic(err)
